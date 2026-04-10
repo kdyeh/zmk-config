@@ -1,0 +1,63 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+
+/* Defines for readability */
+#define MAC_BASE 0
+#define LOWER    1
+#define RAISE    2
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        /* * LAYER 0: MAC BASE (The Endgame Layout)
+         * - Top Left: Grave/Tilde
+         * - Outer Right: Minus and Equals on pinky
+         * - Left Thumbs: Option -> Command -> Space -> Lower Layer
+         * - Right Thumbs: Raise Layer -> Backspace -> Enter -> ESC (Vim Thumb)
+         */
+        default_layer {
+            bindings = <
+&kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                     &kp N6 &kp N7 &kp N8    &kp N9  &kp N0   &kp MINUS
+&kp TAB   &kp Q  &kp W  &kp E  &kp R  &kp T                      &kp Y  &kp U  &kp I     &kp O   &kp P    &kp EQUAL
+&kp LSHFT &kp A  &kp S  &kp D  &kp F  &kp G                      &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+&kp LCTRL &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LBKT   &kp RBKT &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
+              &kp LALT &kp LGUI &kp SPACE &mo LOWER      &mo RAISE &kp BSPC &kp RET &kp ESC
+            >;
+        };
+
+        /* * LAYER 1: LOWER (Symbols, Nav & Screenshots)
+         * - Activated by holding Left Thumb 4 (Inner Key).
+         * - Left Fingers (S, D, F): Option, Command, Shift (for highlighting/skipping words).
+         * - Right Hand: Vim Navigation (HJKL).
+         * - Right Pinky (Outer): Mac Snipping Tool (Cmd+Shift+4).
+         */
+        lower_layer {
+            bindings = <
+&trans     &kp F1  &kp F2    &kp F3     &kp F4      &kp F5                    &kp F6    &kp F7    &kp F8    &kp F9    &kp F10   &kp F11
+&trans     &trans  &trans    &trans     &trans      &trans                    &trans    &trans    &trans    &trans    &trans    &kp F12
+&trans     &trans  &kp LALT  &kp LGUI   &kp LSHFT   &trans                    &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &trans    &kp LS(LG(N4))
+&trans     &trans  &trans    &trans     &trans      &trans  &trans    &trans  &trans    &trans    &trans    &trans    &trans    &trans
+                   &trans    &trans     &trans      &trans            &trans  &trans    &trans    &trans
+            >;
+        };
+
+        /* * LAYER 2: RAISE (System, BT, Media)
+         * - Activated by holding Right Thumb 1 (Inner Key).
+         * - Right Hand: Volume and Track controls mirroring Vim navigation.
+         * - Left Hand: Bluetooth profile management.
+         */
+        raise_layer {
+            bindings = <
+&trans     &trans       &trans       &trans       &trans &trans              &trans      &trans       &trans       &trans     &trans &trans
+&trans     &trans       &trans       &trans       &trans &trans              &trans      &trans       &trans       &trans     &trans &trans
+&trans     &trans       &trans       &trans       &trans &trans              &kp C_PREV  &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &trans &trans
+&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &trans &trans  &trans &trans &trans    &trans       &trans       &trans     &trans &trans
+                        &trans       &trans       &trans &trans              &trans      &trans       &trans       &trans
+            >;
+        };
+    };
+};
