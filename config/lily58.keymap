@@ -13,50 +13,54 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /* * LAYER 0: MAC BASE (The Endgame Layout)
-         * - Top Left: Grave/Tilde
-         * - Outer Right: Minus and Equals on pinky
-         * - Left Thumbs: Option -> Command -> Space -> Lower Layer
-         * - Right Thumbs: Raise Layer -> Backspace -> Enter -> ESC (Vim Thumb)
+        /* * LAYER 0: MAC BASE / PC GAMING 
+         * - SPACE and BACKSPACE in the center (innermost) thumb positions.
+         * - LBKT and RBKT in the center (between the halves).
+         * - LSHFT and LCTRL swapped (LSHFT on home row, LCTRL below).
+         * - LALT on the outer left thumb, BSLH on the outer right thumb.
          */
         default_layer {
             bindings = <
 &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                     &kp N6 &kp N7 &kp N8    &kp N9  &kp N0   &kp MINUS
 &kp TAB   &kp Q  &kp W  &kp E  &kp R  &kp T                      &kp Y  &kp U  &kp I     &kp O   &kp P    &kp EQUAL
-&kp LCTRL &kp A  &kp S  &kp D  &kp F  &kp G                      &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-&kp LSHFT &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LBKT   &kp RBKT &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
-              &kp LGUI &kp LALT &mo LOWER &kp SPACE      &kp RET &mo RAISE &kp BSPC &kp BSLH
+&kp LSHFT &kp A  &kp S  &kp D  &kp F  &kp G                      &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+&kp LCTRL &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LBKT   &kp RBKT &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
+              &kp LALT &kp LGUI &mo LOWER &kp SPACE      &kp BSPC &mo RAISE &kp RET &kp BSLH
             >;
         };
 
-        /* * LAYER 1: LOWER (Symbols, Nav & Screenshots)
-         * - Activated by holding Left Thumb 4 (Inner Key).
-         * - Left Fingers (S, D, F): Option, Command, Shift (for highlighting/skipping words).
-         * - Right Hand: Vim Navigation (HJKL).
-         * - Right Pinky (Outer): Mac Snipping Tool (Cmd+Shift+4).
+        /* * LAYER 1: LOWER (Nav & Numbers)
+         * - ESC on the TAB position.
+         * - Numbers 1-0 on the QWERTY row.
+         * - Right Hand Home: Vim Navigation (HJKL).
+         * - Center: { and } for quick access.
+         * - Inner Right Thumb: Delete (matches Backspace position).
          */
         lower_layer {
             bindings = <
-&kp ESC    &kp F1  &kp F2    &kp F3     &kp F4      &kp F5                    &kp F6    &kp F7    &kp F8    &kp F9    &kp F10   &kp F11
-&trans     &trans  &trans    &trans     &trans      &trans                    &trans    &trans    &trans    &trans    &trans    &kp F12
-&trans     &trans  &kp LALT  &kp LGUI   &kp LSHFT   &trans                    &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &trans    &kp LS(LG(N4))
-&trans     &trans  &trans    &trans     &trans      &trans  &trans    &trans  &trans    &trans    &trans    &trans    &trans    &trans
-                   &trans    &trans     &trans      &trans            &trans  &kp DEL    &trans    &trans
+&kp F1    &kp F2 &kp F3   &kp F4   &kp F5    &kp F6                     &kp F7   &kp F8   &kp F9 &kp F10   &kp F11 &kp F12
+&kp ESC   &kp N1 &kp N2   &kp N3   &kp N4    &kp N5                     &kp N6   &kp N7   &kp N8 &kp N9    &kp N0  &trans
+&trans    &trans &kp LALT &kp LGUI &kp LSHFT &trans                     &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans  &trans
+&trans    &trans &trans   &trans   &trans    &trans   &kp LBRC &kp RBRC &trans   &trans   &trans &trans    &trans  &trans
+                          &trans   &trans    &trans   &trans   &kp DEL  &trans   &trans   &trans
             >;
         };
 
-        /* * LAYER 2: RAISE (System, BT, Media)
-         * - Activated by holding Right Thumb 1 (Inner Key).
-         * - Right Hand: Volume and Track controls mirroring Vim navigation.
-         * - Left Hand: Bluetooth profile management.
+        /* * LAYER 2: RAISE (Symbols & Media + Nav)
+         * - QWERTY Row: ! to % and ^ to ) mirroring the digit columns.
+         * - Left Hand Home: Coding symbols (+ = _ - |).
+         * - Right Hand Home: Media Controls.
+         * - Right Hand Bottom: Navigation Arrows.
+         * - Top Right: PG_UP and PG_DN.
+         * - Outer Right Thumb: PSCRN (matches BSLH position).
          */
         raise_layer {
             bindings = <
-&trans     &trans       &trans       &trans       &trans &trans              &trans      &trans       &trans       &trans     &trans &kp PG_UP
-&trans     &trans       &trans       &trans       &trans &trans              &trans      &trans       &trans       &trans     &trans &kp PG_DN
-&trans     &trans       &trans       &trans       &trans &trans              &kp C_PREV  &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT &trans &trans
-&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &trans &trans  &trans &trans &trans    &trans       &trans       &trans     &trans &trans
-                        &trans       &trans       &trans &kp C_PP              &trans      &trans       &trans       &trans
+&trans     &trans       &trans       &trans       &trans       &trans                       &trans      &trans       &trans       &trans       &trans &kp PG_UP
+&trans     &kp EXCL     &kp AT       &kp HASH     &kp DLLR     &kp PRCNT                    &kp CARET   &kp AMPS     &kp STAR     &kp LPAR     &kp RPAR &kp PG_DN
+&trans     &kp PLUS     &kp EQUAL    &kp UNDER    &kp MINUS    &kp PIPE                     &kp C_PREV  &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT   &kp BSLH &trans
+&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &ext_power EP_TOG &trans &kp LBRC &kp RBRC &kp LEFT    &kp DOWN     &kp UP       &kp RIGHT    &trans &trans
+                                     &trans       &trans       &trans  &kp C_PP             &trans      &trans       &trans       &kp PSCRN
             >;
         };
     };
