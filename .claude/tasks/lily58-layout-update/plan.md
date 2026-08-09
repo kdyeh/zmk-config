@@ -32,7 +32,7 @@ Four small, independent firmware changes that fix the delete-word bug and comple
 - [x] 4. Add ADJUST layer (index 3) containing the BT row + EP_TOG in the same bottom-left positions; add `conditional_layers` node (`if-layers = <1 2>; then-layer = <3>;`)
   - Files: `config/lily58.keymap`
   - ADJUST must be defined after RAISE in the keymap node (higher index).
-- [ ] 5. Verify build via GitHub Actions (`.github/workflows/build.yml` builds both halves per `build.yaml`) or local `west build` if available
+- [x] 5. Verify build via GitHub Actions — run 31342667192 succeeded for both halves (branch push; PR #1 build also triggered)
 - [ ] 6. Flash + hands-on verification against README success criteria; append results to log.md
 
 ## Testing Strategy

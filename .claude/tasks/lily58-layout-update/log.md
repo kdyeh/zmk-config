@@ -17,12 +17,13 @@
 
 ### What's next
 
-- Push branch to trigger the GitHub Actions build (step 5) — not pushed from this session per git discipline (no push without explicit ask).
-- Download `lily58_left`/`lily58_right` uf2 artifacts from the Actions run, flash both halves, verify success criteria on hardware (step 6), log results.
+- ~~Push branch~~ Pushed (kyeh-amp granted collaborator access); PR: https://github.com/kdyeh/zmk-config/pull/1. CI build succeeded for both halves (run 31342667192, single "firmware" artifact).
+- Merge PR, download the firmware artifact, flash both halves, verify success criteria on hardware (step 6), log results.
+- Housekeeping: stray fork kyeh-amp/zmk-config was created while probing push access — delete it if unwanted.
 
 ### Blockers
 
-- None. Build verification pending push.
+- None.
 
 ---
 
