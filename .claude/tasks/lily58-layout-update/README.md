@@ -4,8 +4,8 @@
 
 | Field       | Value            |
 |-------------|------------------|
-| Status      | `planning`       |
-| Phase       | `plan` (spec written; awaiting explicit human go for implement) |
+| Status      | `implementing`   |
+| Phase       | `implement` (keymap changes committed; CI build + hardware verification pending) |
 | Owner       | kenneth.yeh      |
 | Branch      | `claude/zmk-lily58-config-950d23` |
 | Created     | 2026-08-09       |

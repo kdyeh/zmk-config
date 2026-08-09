@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-08-09 — Session 1 (continued): implement
+
+**Actor:** claude (same session, after explicit human go)
+**Phase:** implement
+
+### What was done
+
+- Implemented plan steps 1–4 in `config/lily58.keymap`, commit `3f2f35b`: `bspc_del` mod-morph + transparent LOWER backspace slot, `LC(B)` on LOWER G, `` ` [ ] `` on RAISE bottom-left replacing the BT row, ADJUST layer (index 3) with BT/EP controls via `conditional_layers`.
+- Validated structure: all four layers parse to 12/12/12/14/8 bindings per row (58 total); base-layer left half unchanged (gaming constraint).
+- Updated README status → `implementing`; checked off plan steps 1–4.
+
+### What's next
+
+- Push branch to trigger the GitHub Actions build (step 5) — not pushed from this session per git discipline (no push without explicit ask).
+- Download `lily58_left`/`lily58_right` uf2 artifacts from the Actions run, flash both halves, verify success criteria on hardware (step 6), log results.
+
+### Blockers
+
+- None. Build verification pending push.
+
+---
+
 ## 2026-08-09 — Session 1
 
 **Actor:** claude (design session with kenneth.yeh)

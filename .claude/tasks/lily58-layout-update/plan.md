@@ -20,16 +20,16 @@ Four small, independent firmware changes that fix the delete-word bug and comple
 
 ## Steps
 
-- [ ] 1. Add `bspc_del` mod-morph behavior; bind base-layer Backspace thumb to `&bspc_del`; change LOWER's Backspace-thumb slot from `&kp DEL` to `&trans`
+- [x] 1. Add `bspc_del` mod-morph behavior; bind base-layer Backspace thumb to `&bspc_del`; change LOWER's Backspace-thumb slot from `&kp DEL` to `&trans`
   - Files: `config/lily58.keymap`
   - Behavior: `bindings = <&kp BSPC>, <&kp DEL>; mods = <(MOD_LSFT|MOD_RSFT)>;`
   - This is the delete-word fix. Verify Opt+BSPC path: LOWER(hold) + S(=LALT) + BSPC.
-- [ ] 2. LOWER layer: `G` position `&trans` → `&kp LC(B)` (tmux/herdr prefix)
+- [x] 2. LOWER layer: `G` position `&trans` → `&kp LC(B)` (tmux/herdr prefix)
   - Files: `config/lily58.keymap`
-- [ ] 3. RAISE layer bottom-left row: replace `&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &ext_power EP_TOG` with `` ` `` at X, `[` at C, `]` at V (rest `&trans`)
+- [x] 3. RAISE layer bottom-left row: replace `&bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &ext_power EP_TOG` with `` ` `` at X, `[` at C, `]` at V (rest `&trans`)
   - Files: `config/lily58.keymap`
   - Shift gives `~ { }`. Serves 3-row core + tuicr `[ ] { }` navigation.
-- [ ] 4. Add ADJUST layer (index 3) containing the BT row + EP_TOG in the same bottom-left positions; add `conditional_layers` node (`if-layers = <1 2>; then-layer = <3>;`)
+- [x] 4. Add ADJUST layer (index 3) containing the BT row + EP_TOG in the same bottom-left positions; add `conditional_layers` node (`if-layers = <1 2>; then-layer = <3>;`)
   - Files: `config/lily58.keymap`
   - ADJUST must be defined after RAISE in the keymap node (higher index).
 - [ ] 5. Verify build via GitHub Actions (`.github/workflows/build.yml` builds both halves per `build.yaml`) or local `west build` if available
