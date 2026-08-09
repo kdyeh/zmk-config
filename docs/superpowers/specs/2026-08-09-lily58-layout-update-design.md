@@ -8,7 +8,7 @@
 
 1. Fix delete-word: `LOWER + S(Alt) + Backspace` must send Opt+Backspace (Mac delete-word-backward).
 2. Anchor non-gaming typing to a Corne-style 3-row core (main 3 rows + thumbs); the physical number row remains for gaming only.
-3. Better AeroSpace support via a Hyper key (`ctrl-alt-cmd`), consistent with the existing LOWER home-row mod pattern, without breaking laptop-keyboard usage.
+3. AeroSpace driven by the existing Alt thumb (`alt-*` stock bindings) — identical on the laptop's Option key. Hyper plan shelved 2026-08-09: alt conflicts never materialized in practice.
 4. Single-press tmux/herdr prefix (`Ctrl+B`).
 5. Comfortable `[ ] { } ~ \`` access (also serves tuicr's `[ ] { }` hunk/file navigation).
 6. Preserve gaming: base layer left half untouched (number row, WASD, Ctrl/Shift column).
@@ -20,9 +20,7 @@
 | Topic | Decision |
 |---|---|
 | Delete-word | `bspc_del` mod-morph on base backspace thumb; LOWER backspace slot → `&trans` |
-| AeroSpace | Hyper = `&kp LC(LA(LGUI))` on LOWER at the A position, completing the home-row mod set (A=hyper, S=alt, D=cmd, F=shift). No hold-tap — `\` thumb stays plain. Hyper = `ctrl-alt-cmd` (NO shift) so hyper+F(shift) mirrors alt-shift. aerospace.toml dual-binds `alt-*` and `ctrl-alt-cmd-*` (applied + live) |
-| Laptop fallback | Existing `alt-*` bindings stay; Karabiner maps built-in-keyboard left-ctrl → `ctrl-alt-cmd` (applied + live) |
-| Window move | `hyper+shift+hjkl` and `hyper+shift+<workspace>` mirror the alt-shift bindings; alt-shift still works too |
+| AeroSpace | Alt thumb (base layer) does everything: `alt-hjkl` focus, `alt-shift-hjkl` move, `alt-<digit/letter>` workspaces, `alt-shift-<digit/letter>` send-to-workspace. Zero firmware or host config changes. Hyper experiment (LOWER+A, Karabiner left-ctrl, dual aerospace bindings) rolled back 2026-08-09 — alt conflicts never bit; LOWER A position stays free for future use |
 | tmux/herdr prefix | `&kp LC(B)` on LOWER at the G position |
 | Brackets/grave | RAISE bottom-left: `` ` `` on X, `[` on C, `]` on V (Shift → `~ { }`) |
 | Bluetooth/system | Moved from RAISE to new ADJUST layer (LOWER+RAISE held), same physical positions |
@@ -67,12 +65,12 @@ Left half unchanged for gaming. `\` thumb stays a plain `&kp BSLH`.
 ```
 F1    F2   F3   F4   F5    F6                     F7    F8    F9   F10   F11  F12
 ESC   1    2    3    4     5                      6     7     8    9     0    ___
-___   ✦    ⌥    ⌘    ⇧     C-b                    ←     ↓     ↑    →     ___  ___
+___   ___  ⌥    ⌘    ⇧     C-b                    ←     ↓     ↑    →     ___  ___
 ___   ___  ___  ___  ___   ___   {        }      ___   ___   ___  ___   ___  ___
            ___   ___   ▓(held)  ___    | ‹trans›  ___   ___   ___   ___
 ```
 
-Changes: `✦` Hyper (`&kp LC(LA(LGUI))`) added at A position, completing the home-row mod set (A=hyper, S=alt, D=cmd, F=shift); `C-b` added at G position; backspace-thumb slot `DEL` → `&trans`.
+Changes: `C-b` added at G position; backspace-thumb slot `DEL` → `&trans`.
 
 ### Layer 2 — RAISE
 
@@ -96,24 +94,13 @@ BT_CLR  BT0  BT1  BT2  EP_TOG  ___
 
 ## Companion changes (outside this repo)
 
-**aerospace.toml** — ALREADY APPLIED AND LIVE. Alongside the untouched `alt-*` bindings:
-
-```toml
-ctrl-alt-cmd-h = 'focus left'            # ... j/k/l
-ctrl-alt-cmd-1 = 'workspace 1'           # ... through 9, plus letter workspaces
-ctrl-alt-cmd-shift-h = 'move left'       # ... j/k/l — shift mirrors alt-shift
-ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'   # ... digits + letters
-ctrl-alt-cmd-slash / comma / minus / equal / tab / semicolon  # layout, resize, back-and-forth, service mode
-```
-
-**Karabiner-Elements** — ALREADY APPLIED AND LIVE: built-in-keyboard left-ctrl → `ctrl-alt-cmd` (no shift), so the laptop drives the same bindings; the Lily58's own left-ctrl is unaffected (rule scoped via `is_built_in_keyboard`).
+None. The hyper additions to aerospace.toml and the Karabiner left-ctrl rule were rolled back on 2026-08-09 — aerospace.toml is back to stock `alt-*` bindings, which the Lily58 drives via the base-layer Alt thumb and the laptop drives via plain Option.
 
 ## Success criteria
 
 - `LOWER + S + BSPC` deletes word backward on Mac; `LOWER + D + BSPC` deletes to line start; `Shift + BSPC` forward-deletes.
 - `` ` ~ [ ] { } `` all typable within the 3-row core.
-- `LOWER + A` + HJKL switches AeroSpace focus (LOWER remaps HJKL to arrows; aerospace binds hyper+arrows too); adding `F` (shift) moves the window; `LOWER + A` + QWERTY-row digit switches workspace 1-9.
-- Letter workspaces use the Alt thumb on the base layer (`alt-<letter>` / `alt-shift-<letter>`): hyper+letter is impractical on the board — LOWER remaps most letters, and workspace A's letter is the hyper key itself.
+- AeroSpace unchanged and fully drivable from the base layer: Alt thumb + hjkl/digit/letter (+ Shift pinky for moves).
 - `LOWER + G` sends `Ctrl+B` (tmux and herdr prefix).
 - `LOWER + RAISE` exposes BT profile switching; profiles still pair/switch.
 - Base layer left half byte-identical to current (gaming unaffected).
@@ -123,4 +110,3 @@ ctrl-alt-cmd-slash / comma / minus / equal / tab / semicolon  # layout, resize, 
 
 - **Mod-morph masks Shift:** `Shift+BSPC` sends plain `DEL` (Shift masked) — desired behavior here.
 - **ADJUST ordering:** ADJUST must be a higher layer index than LOWER/RAISE (it is: 3).
-- Existing `alt-*` AeroSpace usage keeps working throughout; hyper bindings are additive.
