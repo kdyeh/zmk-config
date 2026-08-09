@@ -22,7 +22,7 @@
 | Delete-word | `bspc_del` mod-morph on base backspace thumb; LOWER backspace slot → `&trans` |
 | AeroSpace | Hyper hold-tap on outer right thumb (`\`); dual-bind aerospace.toml (keep `alt-*`, add `ctrl-alt-shift-cmd-*`) |
 | Laptop fallback | Existing `alt-*` bindings stay; optional Karabiner Caps→Hyper later |
-| Window move | Stays `alt-shift-hjkl` (Hyper contains Shift, can't compose); AeroSpace service mode is a future option |
+| Window move | `alt-shift-hjkl` still works; hyper path uses AeroSpace "move" binding mode (`hyper-quote` → h/j/k/l nudge, workspace key sends+exits) |
 | tmux/herdr prefix | `&kp LC(B)` on LOWER at the G position |
 | Brackets/grave | RAISE bottom-left: `` ` `` on X, `[` on C, `]` on V (Shift → `~ { }`) |
 | Bluetooth/system | Moved from RAISE to new ADJUST layer (LOWER+RAISE held), same physical positions |
