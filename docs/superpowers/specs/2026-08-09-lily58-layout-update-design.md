@@ -112,7 +112,8 @@ ctrl-alt-cmd-slash / comma / minus / equal / tab / semicolon  # layout, resize, 
 
 - `LOWER + S + BSPC` deletes word backward on Mac; `LOWER + D + BSPC` deletes to line start; `Shift + BSPC` forward-deletes.
 - `` ` ~ [ ] { } `` all typable within the 3-row core.
-- `LOWER + A` + HJKL switches AeroSpace focus; adding `F` (shift) moves the window; `LOWER + A` + digit switches workspace.
+- `LOWER + A` + HJKL switches AeroSpace focus (LOWER remaps HJKL to arrows; aerospace binds hyper+arrows too); adding `F` (shift) moves the window; `LOWER + A` + QWERTY-row digit switches workspace 1-9.
+- Letter workspaces use the Alt thumb on the base layer (`alt-<letter>` / `alt-shift-<letter>`): hyper+letter is impractical on the board — LOWER remaps most letters, and workspace A's letter is the hyper key itself.
 - `LOWER + G` sends `Ctrl+B` (tmux and herdr prefix).
 - `LOWER + RAISE` exposes BT profile switching; profiles still pair/switch.
 - Base layer left half byte-identical to current (gaming unaffected).
