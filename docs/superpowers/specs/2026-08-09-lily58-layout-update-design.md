@@ -20,9 +20,9 @@
 | Topic | Decision |
 |---|---|
 | Delete-word | `bspc_del` mod-morph on base backspace thumb; LOWER backspace slot → `&trans` |
-| AeroSpace | Hyper hold-tap on outer right thumb (`\`); dual-bind aerospace.toml (keep `alt-*`, add `ctrl-alt-shift-cmd-*`) |
-| Laptop fallback | Existing `alt-*` bindings stay; optional Karabiner Caps→Hyper later |
-| Window move | `alt-shift-hjkl` still works; hyper path uses AeroSpace "move" binding mode (`hyper-quote` → h/j/k/l nudge, workspace key sends+exits) |
+| AeroSpace | Hyper hold-tap on outer right thumb (`\`). Hyper = `ctrl-alt-cmd` (NO shift) so hyper+shift can mirror alt-shift. aerospace.toml dual-binds `alt-*` and `ctrl-alt-cmd-*` (applied + live) |
+| Laptop fallback | Existing `alt-*` bindings stay; Karabiner maps built-in-keyboard left-ctrl → `ctrl-alt-cmd` (applied + live) |
+| Window move | `hyper+shift+hjkl` and `hyper+shift+<workspace>` mirror the alt-shift bindings; alt-shift still works too |
 | tmux/herdr prefix | `&kp LC(B)` on LOWER at the G position |
 | Brackets/grave | RAISE bottom-left: `` ` `` on X, `[` on C, `]` on V (Shift → `~ { }`) |
 | Bluetooth/system | Moved from RAISE to new ADJUST layer (LOWER+RAISE held), same physical positions |
@@ -66,7 +66,7 @@ conditional_layers {
 
 Only two changes, both right side:
 - Backspace thumb: `&kp BSPC` → `&bspc_del` (Shift+BSPC = forward delete)
-- Outer right thumb: `&kp BSLH` → `&hyp LS(LC(LA(LGUI))) BSLH` (tap `\`, hold Hyper)
+- Outer right thumb: `&kp BSLH` → `&hyp LC(LA(LGUI)) BSLH` (tap `\`, hold Hyper = ctrl-alt-cmd, no shift)
 
 Left half unchanged for gaming.
 
@@ -104,24 +104,23 @@ BT_CLR  BT0  BT1  BT2  EP_TOG  ___
 
 ## Companion changes (outside this repo)
 
-**aerospace.toml** — add alongside existing `alt-*` bindings:
+**aerospace.toml** — ALREADY APPLIED AND LIVE. Alongside the untouched `alt-*` bindings:
 
 ```toml
-ctrl-alt-shift-cmd-h = 'focus left'
-ctrl-alt-shift-cmd-j = 'focus down'
-ctrl-alt-shift-cmd-k = 'focus up'
-ctrl-alt-shift-cmd-l = 'focus right'
-ctrl-alt-shift-cmd-1 = 'workspace 1'
-# ... through workspace 9
+ctrl-alt-cmd-h = 'focus left'            # ... j/k/l
+ctrl-alt-cmd-1 = 'workspace 1'           # ... through 9, plus letter workspaces
+ctrl-alt-cmd-shift-h = 'move left'       # ... j/k/l — shift mirrors alt-shift
+ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'   # ... digits + letters
+ctrl-alt-cmd-slash / comma / minus / equal / tab / semicolon  # layout, resize, back-and-forth, service mode
 ```
 
-Laptop-only usage is unchanged (`alt-*`). Optional later: Karabiner-Elements Caps Lock → Hyper rule for the laptop keyboard.
+**Karabiner-Elements** — ALREADY APPLIED AND LIVE: built-in-keyboard left-ctrl → `ctrl-alt-cmd` (no shift), so the laptop drives the same bindings; the Lily58's own left-ctrl is unaffected (rule scoped via `is_built_in_keyboard`).
 
 ## Success criteria
 
 - `LOWER + S + BSPC` deletes word backward on Mac; `LOWER + D + BSPC` deletes to line start; `Shift + BSPC` forward-deletes.
 - `` ` ~ [ ] { } `` all typable within the 3-row core.
-- Hold `\` thumb + HJKL switches AeroSpace focus one-handed; tapping `\` still types backslash.
+- Hold `\` thumb + HJKL switches AeroSpace focus one-handed; adding right-pinky Shift moves the window; tapping `\` still types backslash.
 - `LOWER + G` sends `Ctrl+B` (tmux and herdr prefix).
 - `LOWER + RAISE` exposes BT profile switching; profiles still pair/switch.
 - Base layer left half byte-identical to current (gaming unaffected).
