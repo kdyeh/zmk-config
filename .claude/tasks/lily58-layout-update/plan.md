@@ -43,7 +43,7 @@ Four small, independent firmware changes that fix the delete-word bug and comple
 ## Risks
 
 - **Mod-morph masks Shift:** `Shift+BSPC` sends unshifted `DEL` — desired here, but don't "fix" it with `keep-mods`.
-- **ZMK Studio is enabled** (`CONFIG_ZMK_STUDIO=y`): runtime edits made via Studio are overwritten on flash; this repo is the source of truth.
+- **ZMK Studio stored overrides**: Studio edits persist in the settings partition across UF2 flashes and shadow the compiled keymap per-key. If a flashed change doesn't take effect, check zmk.studio for a stale override on that key before debugging the keymap (this happened with `bspc_del`).
 - [config/lily58.conf](../../../config/lily58.conf) sets press debounce to 1 ms while its comment says 3 ms — not part of this task, but bump to 3 ms if key chatter ever appears.
 
 ## Definition of Done

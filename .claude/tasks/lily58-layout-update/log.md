@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-08-09 — Session 1 (continued): flash + debug
+
+**Actor:** claude + kenneth.yeh (hands on hardware)
+**Phase:** implement / verify
+
+### What was done
+
+- Flashed both halves from the CI artifact. Initial symptom: Shift+Backspace still sent plain backspace; suspected failed right-half flash (drive "disconnected mid-copy" — that's actually normal UF2 reboot behavior, and split behavior resolution happens on the left/central half anyway).
+- Systematic diagnosis: `LOWER+G` → `^B` proved new firmware on central; Karabiner-EventViewer showed usage 0x2A + shift flag → morph genuinely not firing in firmware.
+- **Root cause: stale ZMK Studio override.** Studio edits persist in the settings partition, survive UF2 flashes, and shadow the compiled keymap per-key. An old stored binding on the backspace thumb was masking `&bspc_del`.
+- **Fix:** reassigned the key via zmk.studio (USB to left half; locking disabled so it connects directly). Confirmed working by user.
+
+### What's next
+
+- In zmk.studio, scan layers 0-2 for OTHER stale overrides vs the spec diagrams — especially RAISE bottom-left (old stored layout would still have BT_SEL keys there; pressing one switches BT profile unexpectedly) and the LOWER backspace slot.
+- Finish plan step 6 hardware checklist (C-b verified via ^B; morph verified; brackets + ADJUST BT keys pending).
+- Consider adding `settings_reset` shield to build.yaml for future full resets.
+
+### Blockers
+
+- None.
+
+---
+
 ## 2026-08-09 — Session 1 (continued): implement
 
 **Actor:** claude (same session, after explicit human go)

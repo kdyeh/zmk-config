@@ -110,3 +110,4 @@ None. The hyper additions to aerospace.toml and the Karabiner left-ctrl rule wer
 
 - **Mod-morph masks Shift:** `Shift+BSPC` sends plain `DEL` (Shift masked) — desired behavior here.
 - **ADJUST ordering:** ADJUST must be a higher layer index than LOWER/RAISE (it is: 3).
+- **ZMK Studio stored overrides:** Studio edits persist in the settings partition across UF2 flashes and shadow the compiled keymap per-key at boot. If a flashed keymap change doesn't take effect, check zmk.studio for a stale override on that key first (this bit the `bspc_del` rollout). Full reset requires `settings_reset` firmware on both halves (also wipes BT bonds).
