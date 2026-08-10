@@ -1,2 +1,8 @@
 
 .zmk/
+
+# Global gitignore excludes .claude/ — re-include task artifacts only
+# (see CLAUDE.md multi-session task workflow)
+!.claude/
+.claude/*
+!.claude/tasks/

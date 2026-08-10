@@ -1,0 +1,75 @@
+# Session Log: Lily58 Layout Update
+
+> Append-only. Each session adds an entry at the top. This is the audit trail.
+
+---
+
+## 2026-08-09 — Session 1 (continued): flash + debug
+
+**Actor:** claude + kenneth.yeh (hands on hardware)
+**Phase:** implement / verify
+
+### What was done
+
+- Flashed both halves from the CI artifact. Initial symptom: Shift+Backspace still sent plain backspace; suspected failed right-half flash (drive "disconnected mid-copy" — that's actually normal UF2 reboot behavior, and split behavior resolution happens on the left/central half anyway).
+- Systematic diagnosis: `LOWER+G` → `^B` proved new firmware on central; Karabiner-EventViewer showed usage 0x2A + shift flag → morph genuinely not firing in firmware.
+- **Root cause: stale ZMK Studio override.** Studio edits persist in the settings partition, survive UF2 flashes, and shadow the compiled keymap per-key. An old stored binding on the backspace thumb was masking `&bspc_del`.
+- **Fix:** reassigned the key via zmk.studio (USB to left half; locking disabled so it connects directly). Confirmed working by user.
+
+### What's next
+
+- In zmk.studio, scan layers 0-2 for OTHER stale overrides vs the spec diagrams — especially RAISE bottom-left (old stored layout would still have BT_SEL keys there; pressing one switches BT profile unexpectedly) and the LOWER backspace slot.
+- Finish plan step 6 hardware checklist (C-b verified via ^B; morph verified; brackets + ADJUST BT keys pending).
+- Consider adding `settings_reset` shield to build.yaml for future full resets.
+
+### Blockers
+
+- None.
+
+---
+
+## 2026-08-09 — Session 1 (continued): implement
+
+**Actor:** claude (same session, after explicit human go)
+**Phase:** implement
+
+### What was done
+
+- Implemented plan steps 1–4 in `config/lily58.keymap`, commit `3f2f35b`: `bspc_del` mod-morph + transparent LOWER backspace slot, `LC(B)` on LOWER G, `` ` [ ] `` on RAISE bottom-left replacing the BT row, ADJUST layer (index 3) with BT/EP controls via `conditional_layers`.
+- Validated structure: all four layers parse to 12/12/12/14/8 bindings per row (58 total); base-layer left half unchanged (gaming constraint).
+- Updated README status → `implementing`; checked off plan steps 1–4.
+
+### What's next
+
+- ~~Push branch~~ Pushed (kyeh-amp granted collaborator access); PR: https://github.com/kdyeh/zmk-config/pull/1. CI build succeeded for both halves (run 31342667192, single "firmware" artifact).
+- Merge PR, download the firmware artifact, flash both halves, verify success criteria on hardware (step 6), log results.
+- Housekeeping: stray fork kyeh-amp/zmk-config was created while probing push access — delete it if unwanted.
+
+### Blockers
+
+- None.
+
+---
+
+## 2026-08-09 — Session 1
+
+**Actor:** claude (design session with kenneth.yeh)
+**Phase:** plan
+**Duration:** full design cycle, multiple rounds
+
+### What was done
+
+- Analyzed [config/lily58.keymap](../../../config/lily58.keymap); found the delete-word root cause (LOWER reveals Alt on S but simultaneously remaps the BSPC thumb to DEL, so Opt+BSPC becomes Opt+ForwardDelete).
+- Identified drift between the prior session's handoff doc and the keymap on disk (thumb order, nonexistent screenshot macro, arrows/media swap in `092bf37`). Keymap is source of truth.
+- Researched tool keybinding needs: tuicr (vim keys + `[ ] { }`, software leader `;`), herdr (tmux-style `C-b`), tmux (`C-b`), nvim (Space leader). Conclusion: no firmware leader support needed; one `C-b` key covers tmux+herdr.
+- Wrote and iterated the design spec: `docs/superpowers/specs/2026-08-09-lily58-layout-update-design.md` (commits `10c6cbd` through `3b59ee6`).
+- **Hyper saga (important context):** designed, partially deployed, and fully rolled back an AeroSpace Hyper scheme. Iterations: hold-tap on `\` (rejected: no dual-role keys) → full hyper incl. shift (rejected: kills mod+shift move chords) → ctrl-alt-cmd "hyper" + Karabiner left-ctrl on laptop (deployed) → LOWER+A home-row hyper (specced) → discovered letter-workspace breakage under LOWER + workspace-A conflict + Karabiner rule chaining with the macOS caps→ctrl remap (laptop lost ALL Control). User confirmed alt conflicts never bit them → everything hyper reverted. aerospace.toml and karabiner.json are back at stock/pre-session state. Decision recorded in README "Settled Decisions".
+- Created these task artifacts (README.md, plan.md, log.md).
+
+### What's next
+
+- Get explicit human go-ahead on plan.md, then implement steps 1–4 in `config/lily58.keymap`, push through CI (step 5), flash and verify (step 6).
+
+### Blockers
+
+- Awaiting explicit approval to implement. No technical blockers.
