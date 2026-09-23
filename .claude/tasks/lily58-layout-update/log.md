@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-09-22 — Session 2: Deskflow lock key
+
+**Actor:** claude (with kenneth.yeh)
+**Phase:** implement (follow-up)
+
+### What was done
+
+- Added `&kp SLCK` at LOWER + Z. Deskflow (PC host, Mac client) treats Scroll Lock as its default lock-cursor-to-screen toggle (verified in deskflow `src/lib/server/Server.cpp`), so no Deskflow config is needed.
+- Pushed straight to `main` (owner approved direct pushes for this personal repo).
+
+### What's next
+
+- Flash, then check LOWER+Z toggles the Deskflow lock. If it does not, check zmk.studio for a stale override on that key.
+- Keep the Lily58 on the PC's BT profile: Deskflow reads hotkeys from the host keyboard only.
+
+### Blockers
+
+- None.
+
+---
+
 ## 2026-08-09 — Session 1 (continued): flash + debug
 
 **Actor:** claude + kenneth.yeh (hands on hardware)
